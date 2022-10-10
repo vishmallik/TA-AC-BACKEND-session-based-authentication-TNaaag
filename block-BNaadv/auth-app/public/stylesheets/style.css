@@ -1,0 +1,54 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00b7ff;
+}
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00b7ff;
+}
+.container {
+  max-width: 70%;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+.form-control {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 0 auto;
+}
+input,
+textarea {
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+}
+.btn {
+  margin-top: 1rem;
+  display: inline-block;
+  margin-right: 1rem;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  background-color: rgb(77, 201, 77);
+  border-radius: 5px;
+  color: #fff;
+}
+.error-msg {
+  color: red;
+  text-align: center;
+  margin: 0 auto;
+}
+.logout {
+  text-align: center;
+  margin: 0 auto;
+}
