@@ -14,6 +14,9 @@
         <h1>Register new User</h1>
     </header>
     <main>
+        <div class="error-msg">
+            <%=flash%>
+        </div>
         <form action="/users/register" method="POST" class="form-control">
             <input type="text" name="name" id="" placeholder="Name">
             <input type="email" name="email" id="" placeholder="Email">
