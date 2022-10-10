@@ -3,11 +3,21 @@ const router = express.Router();
 const User = require("../models/user");
 
 router.get("/register", function (req, res, next) {
-  res.render("registrationForm");
+  let flash = req.flash("error");
+  res.render("registrationForm", { flash });
 });
 
 router.post("/register", (req, res, next) => {
   User.create(req.body, (err, user) => {
+    console.log(err._message);
+    if (err._message == "User validation failed") {
+      req.flash("error", "Password should be greater than 4 character");
+      return res.redirect("/users/register");
+    }
+    if (err.code == 11000) {
+      req.flash("error", "Email is already registered");
+      return res.redirect("/users/register");
+    }
     if (err) return next(err);
     res.redirect("/users/login");
   });
@@ -26,8 +36,9 @@ router.post("/login", (req, res, next) => {
   }
   User.findOne({ email }, (err, user) => {
     if (err) return next(err);
+
     //email not present in database
-    if (!email) {
+    if (!user) {
       req.flash("error", "User email is not registered");
       return res.redirect("/users/login");
     }
@@ -43,6 +54,12 @@ router.post("/login", (req, res, next) => {
       return res.render("dashboard");
     });
   });
+});
+
+router.get("/logout", (req, res, next) => {
+  req.session.destroy();
+  res.clearCookie();
+  return res.redirect("/users/login");
 });
 
 module.exports = router;
