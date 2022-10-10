@@ -14,14 +14,16 @@
         <h1>Login</h1>
     </header>
     <main>
-        <div class="error-msg">
-            <%=flash%>
-        </div>
-        <form action="/users/login" method="POST" class="form-control">
-            <input type="email" name="email" id="" placeholder="Email">
-            <input type="password" name="password" id="" placeholder="Password">
-            <input type="submit" value="Login">
-        </form>
+        <%if(error){%>
+            <div class="error-msg">
+                <%=flash%>
+            </div>
+            <%}%>
+                <form action="/users/login" method="POST" class="form-control">
+                    <input type="email" name="email" id="" placeholder="Email">
+                    <input type="password" name="password" id="" placeholder="Password">
+                    <input type="submit" value="Login">
+                </form>
 
     </main>
     <footer>

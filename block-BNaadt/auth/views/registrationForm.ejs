@@ -14,17 +14,19 @@
         <h1>Register new User</h1>
     </header>
     <main>
-        <div class="error-msg">
-            <%=flash%>
-        </div>
-        <form action="/users/register" method="POST" class="form-control">
-            <input type="text" name="name" id="" placeholder="Name">
-            <input type="email" name="email" id="" placeholder="Email">
-            <input type="password" name="password" id="" placeholder="Password">
-            <input type="number" name="age" id="" placeholder="Age">
-            <input type="tel" name="phone" id="" placeholder="Phone">
-            <input type="submit" value="Register">
-        </form>
+        <%if(error){%>
+            <div class="error-msg">
+                <%=flash%>
+            </div>
+            <%}%>
+                <form action="/users/register" method="POST" class="form-control">
+                    <input type="text" name="name" id="" placeholder="Name">
+                    <input type="email" name="email" id="" placeholder="Email">
+                    <input type="password" name="password" id="" placeholder="Password">
+                    <input type="number" name="age" id="" placeholder="Age">
+                    <input type="tel" name="phone" id="" placeholder="Phone">
+                    <input type="submit" value="Register">
+                </form>
 
     </main>
     <footer>
