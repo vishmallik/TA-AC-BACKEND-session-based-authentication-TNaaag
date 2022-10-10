@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require("../models/user");
 
 router.get("/register", function (req, res, next) {
-  let flash = req.flash("error");
+  let flash = req.flash("error")[0];
   res.render("registrationForm", { flash });
 });
 
@@ -24,7 +24,7 @@ router.post("/register", (req, res, next) => {
 });
 
 router.get("/login", (req, res, next) => {
-  let flash = req.flash("error");
+  let flash = req.flash("error")[0];
   res.render("login", { flash });
 });
 
