@@ -10,7 +10,10 @@ router.get("/:commentId/like", (req, res, next) => {
     { $inc: { likes: 1 } },
     (err, comment) => {
       if (err) return next(err);
-      res.redirect("/articles/" + comment.articleId);
+      Article.findById(comment.articleId, (err, article) => {
+        if (err) return next(err);
+        res.redirect("/articles/" + article.slug);
+      });
     }
   );
 });
@@ -22,7 +25,10 @@ router.get("/:commentId/dislike", (req, res, next) => {
     { $inc: { likes: -1 } },
     (err, comment) => {
       if (err) return next(err);
-      res.redirect("/articles/" + comment.articleId);
+      Article.findById(comment.articleId, (err, article) => {
+        if (err) return next(err);
+        res.redirect("/articles/" + article.slug);
+      });
     }
   );
 });
@@ -31,7 +37,10 @@ router.get("/:commentId/edit", (req, res, next) => {
   let commentId = req.params.commentId;
   Comment.findById(commentId, (err, comment) => {
     if (err) return next(err);
-    res.render("editComment", { comment });
+    Article.findById(comment.articleId, (err, article) => {
+      if (err) return next(err);
+      res.render("editComment", { comment, article });
+    });
   });
 });
 
@@ -44,7 +53,7 @@ router.get("/:commentId/delete", (req, res, next) => {
       { $pull: { comments: deletedComment._id } },
       (err, article) => {
         if (err) return next(err);
-        res.redirect("/articles/" + article.id);
+        res.redirect("/articles/" + article.slug);
       }
     );
   });
@@ -54,7 +63,10 @@ router.post("/:commentId", (req, res, next) => {
   let commentId = req.params.commentId;
   Comment.findByIdAndUpdate(commentId, req.body, (err, comment) => {
     if (err) return next(err);
-    res.redirect("/articles/" + comment.articleId);
+    Article.findById(comment.articleId, (err, article) => {
+      if (err) return next(err);
+      res.redirect("/articles/" + article.slug);
+    });
   });
 });
 

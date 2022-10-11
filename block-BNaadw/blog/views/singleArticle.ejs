@@ -37,18 +37,18 @@
                 <%= article.likes%>
             </p>
 
-            <a href="/articles/<%= article._id%>/inc" class="like"><i class="fa-solid fa-heart"></i> Like</a>
-            <a href="/articles/<%= article._id%>/dec" class="dislike"><i class="fa-solid fa-heart-crack"></i>
+            <a href="/articles/<%= article.slug%>/inc" class="like"><i class="fa-solid fa-heart"></i> Like</a>
+            <a href="/articles/<%= article.slug%>/dec" class="dislike"><i class="fa-solid fa-heart-crack"></i>
                 Dislike</a>
-            <div> <a href="/articles/<%= article._id%>/edit"><button class="btn-blue btn">Edit
+            <div> <a href="/articles/<%= article.slug%>/edit"><button class="btn-blue btn">Edit
                         Article</button></a>
-                <a href="/articles/<%= article._id%>/delete"><button class="btn-red btn">Delete Article</button></a>
+                <a href="/articles/<%= article.slug%>/delete"><button class="btn-red btn">Delete Article</button></a>
             </div>
 
         </section>
         <section class="container">
             <h4>Add Comment</h4>
-            <form class="form-control-comments" method="POST" action="/articles/<%= article._id%>/comments">
+            <form class="form-control-comments" method="POST" action="/articles/<%= article.slug%>/comments">
                 <input type="text" placeholder="Your name" name="author">
                 <textarea name="content" id="" rows="8"></textarea>
                 <input type="submit" class="comment-btn" value="Comment ">

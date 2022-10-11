@@ -21,14 +21,14 @@
     <main class="edit">
         <section class="container edit-section">
             <div class="form-control edit-form">
-                <form action="/articles/<%= article._id%>" method="post" class="flex-form">
+                <form action="/articles/<%= article.slug%>" method="post" class="flex-form">
                     <input type="text" name="title" placeholder="title" value="<%=article.title%>">
                     <input type="text" name="author" placeholder="author" value="<%=article.author%>">
                     <textarea name="description" cols="30" rows="15"><%= article.description%></textarea>
                     <input type="submit" value="Submit">
                 </form>
             </div>
-            <a href="/articles/<%= article._id%>"><button class="button-64 button-66">Back to Article</button></a>
+            <a href="/articles/<%= article.slug%>"><button class="button-64 button-66">Back to Article</button></a>
         </section>
     </main>
     <footer>
