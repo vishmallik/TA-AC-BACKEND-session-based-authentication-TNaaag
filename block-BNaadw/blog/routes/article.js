@@ -19,8 +19,8 @@ router.get("/", (req, res, next) => {
 
 router.get("/:articleId/inc", (req, res, next) => {
   let articleId = req.params.articleId;
-  Article.findByIdAndUpdate(
-    articleId,
+  Article.findOneAndUpdate(
+    { slug: articleId },
     { $inc: { likes: 1 } },
     (err, article) => {
       if (err) return next(err);
@@ -31,8 +31,8 @@ router.get("/:articleId/inc", (req, res, next) => {
 
 router.get("/:articleId/dec", (req, res, next) => {
   let articleId = req.params.articleId;
-  Article.findByIdAndUpdate(
-    articleId,
+  Article.findOneAndUpdate(
+    { slug: articleId },
     { $inc: { likes: -1 } },
     (err, article) => {
       if (err) return next(err);
@@ -43,7 +43,7 @@ router.get("/:articleId/dec", (req, res, next) => {
 
 router.get("/:articleId/edit", (req, res, next) => {
   let articleId = req.params.articleId;
-  Article.findById(articleId, (err, article) => {
+  Article.findOne({ slug: articleId }, (err, article) => {
     if (err) return next(err);
     res.render("editArticle", { article });
   });
@@ -51,7 +51,7 @@ router.get("/:articleId/edit", (req, res, next) => {
 
 router.get("/:articleId/delete", (req, res, next) => {
   let articleId = req.params.articleId;
-  Article.findByIdAndDelete(articleId, (err, deletedArticle) => {
+  Article.findOneAndDelete({ slug: articleId }, (err, deletedArticle) => {
     if (err) return next(err);
     Comment.deleteMany({ articleId: deletedArticle._id }, (err, result) => {
       if (err) return next(err);
@@ -62,23 +62,25 @@ router.get("/:articleId/delete", (req, res, next) => {
 
 router.post("/:articleId/comments", (req, res, next) => {
   let articleId = req.params.articleId;
-  req.body.articleId = articleId;
-  Comment.create(req.body, (err, comment) => {
-    if (err) return next(err);
-    Article.findByIdAndUpdate(
-      articleId,
-      { $push: { comments: comment._id } },
-      (err, article) => {
-        if (err) return next(err);
-        res.redirect("/articles/" + articleId);
-      }
-    );
+  Article.findOne({ slug: articleId }, (err, article) => {
+    req.body.articleId = article._id;
+    Comment.create(req.body, (err, comment) => {
+      if (err) return next(err);
+      Article.findOneAndUpdate(
+        { slug: articleId },
+        { $push: { comments: comment._id } },
+        (err, article) => {
+          if (err) return next(err);
+          res.redirect("/articles/" + articleId);
+        }
+      );
+    });
   });
 });
 
 router.post("/:articleId", (req, res, next) => {
   let articleId = req.params.articleId;
-  Article.findByIdAndUpdate(articleId, req.body, (err, article) => {
+  Article.findOneAndUpdate({ slug: articleId }, req.body, (err, article) => {
     if (err) return next(err);
     res.redirect("/articles/" + articleId);
   });
@@ -86,7 +88,7 @@ router.post("/:articleId", (req, res, next) => {
 
 router.get("/:articleId", (req, res, next) => {
   let articleId = req.params.articleId;
-  Article.findById(articleId)
+  Article.findOne({ slug: articleId })
     .populate("comments")
     .exec((err, article) => {
       if (err) return next(err);

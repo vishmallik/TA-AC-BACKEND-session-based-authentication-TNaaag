@@ -20,9 +20,6 @@
     <main class="articles">
         <section class="container">
             <article class="flex">
-
-
-
                 <div class=" form-control">
                     <h2>Create new Article</h2>
                     <form action="/articles" method="post" class="flex-form">
@@ -32,11 +29,10 @@
                         <input type="submit" value="Create new article">
                     </form>
                 </div>
-
             </article>
             <h4>All Articles</h4>
             <% articles.forEach((article)=>{ %>
-                <a href="/articles/<%= article._id%>" class="article">
+                <a href="/articles/<%= article.slug%>" class="article">
                     <%= article.title %>
                 </a>
                 <% }) %>
